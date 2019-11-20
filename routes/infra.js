@@ -1,72 +1,24 @@
+// 動作は全ルーターで共通。@/routes/common.js参照。
+
 import Router from 'express-promise-router';
-import mongodb from 'mongodb'
-
-
-// 面倒。
-const url = 'mongodb://localhost:27017';
-const dbName = 'kuninushi';
-const client = mongodb.MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
-const ObjectID = mongodb.ObjectID;
+import { kGetAll, kGetById, kPost } from './common.js';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-    await client.connect();
-    const col = client.db(dbName).collection("infra");
-    const objects = await col.find({}).toArray();
-
-    objects.forEach((obj) => {
-        delete obj.object;
-    });
-
-    client.close();
-
-    res.json(objects);
+    const resData = await kGetAll(req, res, 'infra');
+    res.json(resData);
 });
 
 router.get('/:id', async (req, res) => {
-    await client.connect();
-    const id = req.params.id;
-    const col = client.db(dbName).collection("infra");
-    const object = await col.findOne({"_id": new ObjectID(id)});
-    
-    client.close();
-
-    res.json(object.object);
+    const resData = await kGetById(req, res, 'infra');
+    res.json(resData);
 });
 
 router.post('/', async(req, res) => {
-    const infra = req.body;
-    await client.connect();
+    const resData = await kPost(req, res, 'infra');
+    res.json(resData);
 
-    //一括投入のみ想定。POSTされた時点でドキュメント初期化する。
-    const cols = await client.db(dbName).listCollections({name: "infra"}).toArray();
-    if(cols.length > 0) {
-        client.db(dbName).collection("infra").drop();
-    }
-
-    const col = client.db(dbName).collection("infra");
-
-    //いい感じにparseして保存.
-    const payload = []
-    infra.forEach((obj) => {
-        const k = Object.keys(obj)[0];
-        const dn = obj[k].attributes.dn;
-
-        const data = {
-            type: k,
-            dn: dn,
-            object: obj,
-        };
-
-        payload.push(data);
-
-    });
-    await col.insertMany(payload);
-
-    client.close();
-
-    res.json({"message": "success"});
 });
 
 export default router;

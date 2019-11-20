@@ -1,18 +1,43 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <b-container fluid>
+    <b-row>
+
+    <b-col cols=1>
+    <!-- 位置合わせ用 -->
+    </b-col>
+
+    <b-col cols=10>
+      <b-tabs>
+        <b-tab title="uni">
+          <Selector target="uni"></Selector>
+        </b-tab>
+        <b-tab title="infra">
+          <Selector target="infra"></Selector>
+        </b-tab>
+        <b-tab title="fabric">
+          <Selector target="fabric"></Selector>
+        </b-tab>
+      </b-tabs>
+    </b-col>
+
+    </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Selector from '@/components/Selector.vue'
 
 export default {
-  name: 'home',
+  name: 'Home',
+  data: function() {
+      return {
+          selected: undefined,
+      };
+  },
   components: {
-    HelloWorld
+      Selector,
   }
 }
 </script>

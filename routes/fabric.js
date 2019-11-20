@@ -6,17 +6,17 @@ import { kGetAll, kGetById, kPost } from './common.js';
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const resData = await kGetAll(req, res, 'uni');
+    const resData = await kGetAll(req, res, 'fabric');
     res.json(resData);
 });
 
 router.get('/:id', async (req, res) => {
-    const resData = await kGetById(req, res, 'uni');
+    const resData = await kGetById(req, res, 'fabric');
     res.json(resData);
 });
 
 router.post('/', async(req, res) => {
-    const resData = await kPost(req, res, 'uni');
+    const resData = await kPost(req, res, 'fabric');
     res.json(resData);
 
 });
