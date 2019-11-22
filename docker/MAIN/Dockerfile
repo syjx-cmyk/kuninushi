@@ -7,7 +7,9 @@ RUN apk update && \
     apk add nodejs npm && \
     git clone https://github.com/sy4may0/kuninushi.git && \
     cd kuninushi && \
-    npm install && \
-    npm run build
+    npm install --production&& \
+    npm run build-server && \
+    npm run build-frontend
 
+CMD ["node", "/kuninushi/server/server.js"]
 

@@ -5,8 +5,7 @@
   "scripts": {
     "server": "babel-node ./app.js",
     "serve": "vue-cli-service serve",
-    "build-frontend": "vue-cli-service build",
-    "build-server": "webpack",
+    "build": "vue-cli-service build; webpack",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

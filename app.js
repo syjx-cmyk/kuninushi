@@ -14,6 +14,7 @@ const app = express();
 const port = 3000;
 
 // view engine setup
+console.log(__dirname);
 app.set('views', path.join(__dirname, 'wwwroot'));
 app.set('view engine', 'jade');
 app.set('port', port);
