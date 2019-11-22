@@ -4,27 +4,26 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
+import http from 'http';
 
 import infraRouter from './routes/infra';
 import uniRouter from './routes/uni';
 import fabricRouter from './routes/fabric';
 
 const app = express();
-
-const corsOptions = {
-    origin: "http://tk2-239-29306.vs.sakura.ne.jp:8080"
-};
+const port = 3000;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'wwwroot'));
 app.set('view engine', 'jade');
+app.set('port', port);
 
 app.use(logger('dev'));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use('/infra', infraRouter);
 app.use('/uni', uniRouter);
@@ -46,4 +45,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+const server = http.createServer(app);
+server.listen(port);

@@ -1,8 +1,10 @@
 import mongodb from 'mongodb';
+import dotenv from 'dotenv';
 
-// 面倒。
-const url = 'mongodb://localhost:27017';
-const dbName = 'kuninushi';
+dotenv.config();
+
+const url = process.env.EXPRESS_MONGO_URI;
+const dbName = "kuninushi";
 const ObjectID = mongodb.ObjectID;
 
 // GET /
