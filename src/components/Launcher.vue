@@ -57,7 +57,7 @@ export default {
           formObject[Object.keys(formObject)].attributes = newAttr;
 
           const result = await axios.post(process.env.VUE_APP_APIC_URL + '/', formObject);
-          alert(result);
+          alert(result.data.text);
 
       }
   },

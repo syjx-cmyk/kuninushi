@@ -32,8 +32,12 @@ def apic_post():
 
     data = api.post("/api/mo/uni.json", payload)
     #[TODO] len(data)が0ならOK, 1以上ならエラーメッセージ返すよう修正しろ。
-    print(data);
-    return json.dumps(data);
+    result = {"text": "Unknown Error"} 
+    if len(data) == 0:
+        result = {"text": "Success."} 
+    if len(data) == 1:
+        result = {"text": data[0]['error']['attributes']['text']}
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=3010)
