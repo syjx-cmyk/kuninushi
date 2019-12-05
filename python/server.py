@@ -31,7 +31,6 @@ def apic_post():
     api = apic.APIC(APIC_URL, APIC_USER, APIC_PASS, IGNORE_SSL)
 
     data = api.post("/api/mo/uni.json", payload)
-    #[TODO] len(data)が0ならOK, 1以上ならエラーメッセージ返すよう修正しろ。
     result = {"text": "Unknown Error"} 
     if len(data) == 0:
         result = {"text": "Success."} 
